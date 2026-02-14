@@ -7,7 +7,7 @@
   "workbench.tree.renderIndentGuides": "always",
   "custom-ui-style.stylesheet": {
    ".monaco-workbench": {
-      "background-color": "#131217 !important"
+      "background-color": "#121216 !important"
    },
    ".part.sidebar": {
       "font-family": "'Bear Sans UI', sans-serif !important",
@@ -132,7 +132,7 @@
       "box-shadow": "0 2px 8px 0 rgba(0,0,0,0.3) !important"
    },
    ".part.activitybar": {
-      "background": "#131217 !important",
+      "background": "#121216 !important",
       "margin": "8px 20px 30px 12px",
       "width": "48px !important",
       "min-width": "48px !important"
@@ -196,10 +196,10 @@
       "transform-origin": "top right !important"
    },
    ".part.titlebar": {
-      "background-color": "#131217 !important"
+      "background-color": "#121216 !important"
    },
    ".part.statusbar": {
-      "background-color": "#131217 !important"
+      "background-color": "#121216 !important"
    },
    ".part.statusbar .statusbar-item-label": {
       "transition": "color 0.4s cubic-bezier(0.4, 0, 0.2, 1)"
