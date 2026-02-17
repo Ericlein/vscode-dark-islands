@@ -1,13 +1,5 @@
 # Islands Dark
 
-<a href="https://www.buymeacoffee.com/bwya77" style="margin-right: 10px;">
-    <img src="https://img.shields.io/badge/Buy%20Me%20a%20Coffee-ffdd00?style=for-the-badge&logo=buy-me-a-coffee&logoColor=black" />
-</a>
-<a href="https://github.com/sponsors/bwya77">
-    <img src="https://img.shields.io/badge/sponsor-30363D?style=for-the-badge&logo=GitHub-Sponsors&logoColor=#EA4AAA" />
-</a>
-
-
 ## **THIS THEME IS STILL A WORK IN PROGRESS**
 
 A dark color theme for Visual Studio Code inspired by JetBrains' Islands Dark theme. Features floating glass-like panels, rounded corners, smooth animations, and a deeply refined UI.
@@ -57,7 +49,7 @@ If you prefer to clone first:
 #### macOS/Linux
 
 ```bash
-git clone https://github.com/bwya77/vscode-dark-islands.git islands-dark
+git clone https://github.com/Ericlein/vscode-dark-islands.git islands-dark
 cd islands-dark
 ./install.sh
 ```
@@ -65,7 +57,7 @@ cd islands-dark
 #### Windows
 
 ```powershell
-git clone https://github.com/bwya77/vscode-dark-islands.git islands-dark
+git clone https://github.com/Ericlein/vscode-dark-islands.git islands-dark
 cd islands-dark
 .\install.ps1
 ```
@@ -74,8 +66,9 @@ The scripts will automatically:
 - ✅ Install the Islands Dark theme extension
 - ✅ Install the Custom UI Style extension
 - ✅ Install Bear Sans UI fonts
-- ✅ Merge settings into your VS Code: configuration
-- ✅ Enable Custom UI Style and reload VS Code:
+- ✅ Ask your line highlight preference (subtle highlight or cursor only)
+- ✅ Merge settings into your VS Code configuration
+- ✅ Enable Custom UI Style and reload VS Code
 
 > **Note:** IBM Plex Mono and FiraCode Nerd Font Mono must be installed separately (the script will remind you).
 
@@ -88,7 +81,7 @@ If you prefer to install manually, follow these steps:
 Clone this repo and copy the extension files:
 
 ```bash
-git clone https://github.com/bwya77/vscode-dark-islands.git islands-dark
+git clone https://github.com/Ericlein/vscode-dark-islands.git islands-dark
 cd islands-dark
 mkdir -p ~/.vscode/extensions/bwya77.islands-dark-1.0.0
 cp package.json ~/.vscode/extensions/bwya77.islands-dark-1.0.0/
@@ -97,7 +90,7 @@ cp -r themes ~/.vscode/extensions/bwya77.islands-dark-1.0.0/
 
 On Windows (PowerShell):
 ```powershell
-git clone https://github.com/bwya77/vscode-dark-islands.git islands-dark
+git clone https://github.com/Ericlein/vscode-dark-islands.git islands-dark
 cd islands-dark
 $ext = "$env:USERPROFILE\.vscode\extensions\bwya77.islands-dark-1.0.0"
 New-Item -ItemType Directory -Path $ext -Force
@@ -122,7 +115,7 @@ For the best experience with the color-matched icon glow effect, install the **S
 3. Click **Install**
 4. Set it as your icon theme: **Command Palette** > **Preferences: File Icon Theme** > **Seti Folder**
 
-#### Step 5: Install fonts
+#### Step 4: Install fonts
 
 This theme uses two fonts:
 
@@ -136,7 +129,7 @@ To install Bear Sans UI:
 
 If you prefer different fonts, update the `editor.fontFamily`, `terminal.integrated.fontFamily`, and `font-family` values in the settings.
 
-#### Step 6: Apply the settings
+#### Step 5: Apply the settings
 
 Copy the contents of `settings.json` from this repo into your VS Code: settings:
 
@@ -145,6 +138,14 @@ Copy the contents of `settings.json` from this repo into your VS Code: settings:
 3. Merge the contents of this repo's `settings.json` into your settings file
 
 > **Note:** If you already have existing settings, merge carefully. The key settings are `workbench.colorTheme`, `custom-ui-style.stylesheet`, and the font/indent preferences.
+
+#### Step 6: (Optional) Disable line highlight
+
+If you prefer just a blinking cursor with no line highlight:
+
+1. Open **Command Palette** (`Cmd+Shift+P` / `Ctrl+Shift+P`)
+2. Search for **Preferences: Open User Settings (JSON)**
+3. Add `"editor.renderLineHighlight": "none"` to your settings
 
 #### Step 7: Enable Custom UI Style
 

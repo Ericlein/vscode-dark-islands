@@ -100,6 +100,20 @@ try {
 }
 
 Write-Host ""
+Write-Host "Line Highlight Preference" -ForegroundColor Cyan
+Write-Host "   1) Subtle highlight (default)"
+Write-Host "   2) No highlight (cursor only)"
+$lineHighlightChoice = Read-Host "Choose [1/2]"
+
+if ($lineHighlightChoice -eq "2") {
+    $disableLineHighlight = $true
+    Write-Host "Line highlight will be disabled" -ForegroundColor Green
+} else {
+    $disableLineHighlight = $false
+    Write-Host "Subtle line highlight will be used" -ForegroundColor Green
+}
+
+Write-Host ""
 Write-Host "Step 4: Applying VS Code settings..."
 $settingsDir = "$env:APPDATA\Code\User"
 if (-not (Test-Path $settingsDir)) {
@@ -164,6 +178,19 @@ if (Test-Path $settingsFile) {
 } else {
     Copy-Item "$scriptDir\settings.json" $settingsFile
     Write-Host "Settings applied" -ForegroundColor Green
+}
+
+# Apply line highlight preference
+if ($disableLineHighlight) {
+    try {
+        $currentRaw = Get-Content $settingsFile -Raw
+        $currentSettings = (Strip-Jsonc $currentRaw) | ConvertFrom-Json
+        $currentSettings | Add-Member -NotePropertyName "editor.renderLineHighlight" -NotePropertyValue "none" -Force
+        $currentSettings | ConvertTo-Json -Depth 100 | Set-Content $settingsFile
+        Write-Host "Line highlight disabled" -ForegroundColor Green
+    } catch {
+        Write-Host "Could not apply line highlight preference" -ForegroundColor Yellow
+    }
 }
 
 Write-Host ""

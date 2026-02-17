@@ -77,6 +77,25 @@ else
 fi
 
 echo ""
+echo "Line Highlight Preference"
+echo "   1) Subtle highlight (default)"
+echo "   2) No highlight (cursor only)"
+printf "Choose [1/2]: "
+if [ -t 0 ]; then
+    read line_highlight_choice
+else
+    line_highlight_choice="1"
+fi
+
+if [ "$line_highlight_choice" = "2" ]; then
+    DISABLE_LINE_HIGHLIGHT=true
+    echo -e "${GREEN}✓ Line highlight will be disabled${NC}"
+else
+    DISABLE_LINE_HIGHLIGHT=false
+    echo -e "${GREEN}✓ Subtle line highlight will be used${NC}"
+fi
+
+echo ""
 echo "⚙️  Step 4: Applying VS Code settings..."
 SETTINGS_DIR="$HOME/.config/Code/User"
 if [[ "$OSTYPE" == "darwin"* ]]; then
@@ -149,6 +168,22 @@ else
     # No existing settings, just copy
     cp "$SCRIPT_DIR/settings.json" "$SETTINGS_FILE"
     echo -e "${GREEN}✓ Settings applied${NC}"
+fi
+
+# Apply line highlight preference
+if [ "$DISABLE_LINE_HIGHLIGHT" = "true" ]; then
+    if command -v node &> /dev/null; then
+        node -e "
+const fs = require('fs');
+const f = '$SETTINGS_FILE';
+const s = JSON.parse(fs.readFileSync(f, 'utf8'));
+s['editor.renderLineHighlight'] = 'none';
+fs.writeFileSync(f, JSON.stringify(s, null, 2));
+"
+        echo -e "${GREEN}✓ Line highlight disabled${NC}"
+    else
+        echo -e "${YELLOW}⚠️  Could not apply line highlight preference (Node.js required)${NC}"
+    fi
 fi
 
 echo ""
