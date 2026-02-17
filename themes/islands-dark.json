@@ -134,7 +134,7 @@
     "editor.findMatchBorder": "#73b00a",
     "editor.rangeHighlightBackground": "#25324d30",
     "editor.hoverHighlightBackground": "#25324d30",
-    "editor.lineHighlightBackground": "#252629",
+    "editor.lineHighlightBackground": "#222428",
     "editor.lineHighlightBorder": "#1f202400",
     "editorLink.activeForeground": "#548af7",
     "editorWhitespace.foreground": "#3c3f41",
