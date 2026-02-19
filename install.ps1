@@ -65,7 +65,7 @@ if (Test-Path "$extDir\themes") {
 Write-Host ""
 Write-Host "Step 2: Installing Custom UI Style extension..."
 try {
-    $output = code --install-extension subframe7536.custom-ui-style --force 2>&1
+    code --install-extension subframe7536.custom-ui-style --force 2>&1 | Out-Null
     Write-Host "Custom UI Style extension installed" -ForegroundColor Green
 } catch {
     Write-Host "Could not install Custom UI Style extension automatically" -ForegroundColor Yellow
@@ -123,7 +123,7 @@ if (-not (Test-Path $settingsDir)) {
 $settingsFile = Join-Path $settingsDir "settings.json"
 
 # Function to strip JSONC features (comments and trailing commas) for JSON parsing
-function Strip-Jsonc {
+function Split-Jsonc {
     param([string]$Text)
     # Remove single-line comments
     $Text = $Text -replace '//.*$', ''

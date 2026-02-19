@@ -5,15 +5,15 @@ param()
 
 $ErrorActionPreference = "Stop"
 
-echo "🏝️  Islands Dark Theme Bootstrap Installer"
-echo "=========================================="
-echo ""
+Write-Output "🏝️  Islands Dark Theme Bootstrap Installer"
+Write-Output "=========================================="
+Write-Output ""
 
 $RepoUrl = "https://github.com/Ericlein/vscode-dark-islands.git"
 $InstallDir = "$env:TEMP\islands-dark-temp"
 
-echo "📥 Step 1: Downloading Islands Dark..."
-echo "   Repository: $RepoUrl"
+Write-Output "📥 Step 1: Downloading Islands Dark..."
+Write-Output "   Repository: $RepoUrl"
 
 # Remove old temp directory if exists
 if (Test-Path $InstallDir) {
@@ -24,37 +24,37 @@ if (Test-Path $InstallDir) {
 try {
     git clone $RepoUrl $InstallDir --quiet
 } catch {
-    echo "❌ Failed to download Islands Dark"
-    echo "   Make sure Git is installed: https://git-scm.com/download/win"
+    Write-Output "❌ Failed to download Islands Dark"
+    Write-Output "   Make sure Git is installed: https://git-scm.com/download/win"
     exit 1
 }
 
-echo "✓ Downloaded successfully"
-echo ""
+Write-Output "✓ Downloaded successfully"
+Write-Output ""
 
-echo "🚀 Step 2: Running installer..."
-echo ""
+Write-Output "🚀 Step 2: Running installer..."
+Write-Output ""
 
 # Run installer
-cd $InstallDir
+Set-Location $InstallDir
 try {
     .\install.ps1
 } catch {
-    echo "❌ Installation failed"
-    echo $_.Exception.Message
+    Write-Output "❌ Installation failed"
+    Write-Output $_.Exception.Message
     exit 1
 }
 
 # Cleanup
-echo ""
-echo "🧹 Step 3: Cleaning up..."
+Write-Output ""
+Write-Output "🧹 Step 3: Cleaning up..."
 $remove = Read-Host "   Remove temporary files? (y/n)"
 if ($remove -eq 'y' -or $remove -eq 'Y') {
     Remove-Item -Recurse -Force $InstallDir
-    echo "✓ Temporary files removed"
+    Write-Output "✓ Temporary files removed"
 } else {
-    echo "   Files kept at: $InstallDir"
+    Write-Output "   Files kept at: $InstallDir"
 }
 
-echo ""
-echo "🎉 Done! Enjoy your Islands Dark theme!"
+Write-Output ""
+Write-Output "🎉 Done! Enjoy your Islands Dark theme!"
