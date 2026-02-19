@@ -457,5 +457,7 @@
       "opacity": "1 !important"
    }
   },
-  "workbench.iconTheme": "vs-seti-folder"
+  "workbench.iconTheme": "vs-seti-folder",
+  "custom-ui-style.reloadWithoutPrompting": true,
+  "custom-ui-style.watch": false
 }

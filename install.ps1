@@ -209,19 +209,66 @@ if (-not (Test-Path $firstRunFile)) {
     Read-Host "Press Enter to continue and reload VS Code"
 }
 
-Write-Host "   Applying CSS customizations..."
-
 Write-Host ""
 Write-Host "Islands Dark theme has been installed!" -ForegroundColor Green
-Write-Host "   VS Code will now reload to apply the custom UI style."
+Write-Host ""
+Write-Host "   Opening VS Code and applying custom UI style..."
 Write-Host ""
 
-# Reload VS Code
-Write-Host "   Reloading VS Code..." -ForegroundColor Cyan
+# Open VS Code
+code $scriptDir 2>$null
+
+# Wait for VS Code to fully load and extensions to activate
+Write-Host "   Waiting for VS Code to load..." -ForegroundColor DarkGray
+Start-Sleep -Seconds 10
+
+# Trigger "Custom UI Style: Reload" via command palette using SendKeys
+# This applies the CSS patches and auto-restarts (reloadWithoutPrompting=true)
+Write-Host "   Triggering Custom UI Style reload..." -ForegroundColor DarkGray
 try {
-    code --reload-window 2>$null
+    Add-Type -AssemblyName System.Windows.Forms
+    Add-Type @"
+        using System;
+        using System.Runtime.InteropServices;
+        public class Win32Util {
+            [DllImport("user32.dll")]
+            [return: MarshalAs(UnmanagedType.Bool)]
+            public static extern bool SetForegroundWindow(IntPtr hWnd);
+        }
+"@
+
+    # Find VS Code by window title (more reliable than process name)
+    $vscodeProcess = Get-Process | Where-Object { $_.MainWindowTitle -match "Visual Studio Code" } | Select-Object -First 1
+    if (-not $vscodeProcess) {
+        # Fallback: try process name
+        $vscodeProcess = Get-Process -Name "Code" -ErrorAction SilentlyContinue |
+            Where-Object { $_.MainWindowHandle -ne 0 } | Select-Object -First 1
+    }
+
+    if ($vscodeProcess -and $vscodeProcess.MainWindowHandle -ne 0) {
+        # Focus VS Code window using Win32 API
+        [Win32Util]::SetForegroundWindow($vscodeProcess.MainWindowHandle) | Out-Null
+        Start-Sleep -Milliseconds 1000
+
+        # Open command palette with Ctrl+Shift+P
+        [System.Windows.Forms.SendKeys]::SendWait("^+p")
+        Start-Sleep -Milliseconds 1000
+
+        # Type the command
+        [System.Windows.Forms.SendKeys]::SendWait("Custom UI Style{:} Reload")
+        Start-Sleep -Milliseconds 1000
+
+        # Press Enter to execute
+        [System.Windows.Forms.SendKeys]::SendWait("{ENTER}")
+
+        Write-Host "   Custom UI Style reload triggered. VS Code will restart automatically." -ForegroundColor Green
+    } else {
+        Write-Host "   Could not find VS Code window." -ForegroundColor Yellow
+        Write-Host "   Please run 'Custom UI Style: Reload' from the Command Palette (Ctrl+Shift+P)." -ForegroundColor Yellow
+    }
 } catch {
-    code $scriptDir 2>$null
+    Write-Host "   Could not trigger reload automatically: $($_.Exception.Message)" -ForegroundColor Yellow
+    Write-Host "   Please run 'Custom UI Style: Reload' from the Command Palette (Ctrl+Shift+P)." -ForegroundColor Yellow
 }
 
 Write-Host ""
