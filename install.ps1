@@ -122,7 +122,7 @@ if (-not (Test-Path $settingsDir)) {
 
 $settingsFile = Join-Path $settingsDir "settings.json"
 
-# Function to strip JSONC features (comments and trailing commas) for JSON parsing
+# Function to Split JSONC features (comments and trailing commas) for JSON parsing
 function Split-Jsonc {
     param([string]$Text)
     # Remove single-line comments
@@ -135,7 +135,7 @@ function Split-Jsonc {
 }
 
 $newSettingsRaw = Get-Content "$scriptDir\settings.json" -Raw
-$newSettings = (Strip-Jsonc $newSettingsRaw) | ConvertFrom-Json
+$newSettings = (Split-Jsonc $newSettingsRaw) | ConvertFrom-Json
 
 if (Test-Path $settingsFile) {
     Write-Host "Existing settings.json found" -ForegroundColor Yellow
@@ -144,7 +144,7 @@ if (Test-Path $settingsFile) {
 
     try {
         $existingRaw = Get-Content $settingsFile -Raw
-        $existingSettings = (Strip-Jsonc $existingRaw) | ConvertFrom-Json
+        $existingSettings = (Split-Jsonc $existingRaw) | ConvertFrom-Json
 
         # Merge settings - Islands Dark settings take precedence
         $mergedSettings = @{}
@@ -184,7 +184,7 @@ if (Test-Path $settingsFile) {
 if ($disableLineHighlight) {
     try {
         $currentRaw = Get-Content $settingsFile -Raw
-        $currentSettings = (Strip-Jsonc $currentRaw) | ConvertFrom-Json
+        $currentSettings = (Split-Jsonc $currentRaw) | ConvertFrom-Json
         $currentSettings | Add-Member -NotePropertyName "editor.renderLineHighlight" -NotePropertyValue "none" -Force
         $currentSettings | ConvertTo-Json -Depth 100 | Set-Content $settingsFile
         Write-Host "Line highlight disabled" -ForegroundColor Green
