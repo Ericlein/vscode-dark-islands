@@ -200,15 +200,15 @@
       "font-size": "11px !important"
    },
    ".scm-editor": {
-      "border-radius": "9999px !important",
+      "border-radius": "12px !important",
       "overflow": "hidden !important"
    },
    ".scm-input": {
-      "border-radius": "9999px !important",
+      "border-radius": "12px !important",
       "overflow": "hidden !important"
    },
    ".scm-input + .scm-editor-toolbar + .monaco-button": {
-      "border-radius": "9999px !important"
+      "border-radius": "12px !important"
    },
    ".part.sidebar .monaco-button": {
       "border-radius": "9999px !important"
